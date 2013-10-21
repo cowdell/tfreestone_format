@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Formatter;
 
 /**
@@ -7,35 +8,55 @@ import java.util.Formatter;
  * Time: 4:49 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Receipt {
+  public class Receipt {
     private double total = 0;
     private Formatter f = new Formatter (System.out);
 
+
     //Holds the values of the width of text
-    private int W1 = 15, W2 = 5, W3 = 10;
+    int qty = 10, priceWidth = 10, receiptPriceWidth = 15;
 
-    //Holds the values of the string
-    private String s1 = "%-" + W1 + "s %" + W2 + "s %" + W3 + "s\n";
-    //private String s2 = "%-" + W1 + ".15s %" + W2 + "d %" + W3 + ".2f\n";
-    private String s3 = "%-" + W1 + "s %" + W2 + "s %" + W3 + ".2f\n";
+    //Ray
+    static String[] receiptItems = { "Laptop", "Screen", "Desktop" };
 
-    public void printTitle() {
-        f.format(s1, "Item", "Qty", "Price");
-        f.format(s1, "----", "---", "-----");
-    }
-    public void print(String name, int qty, double price) {
+    //Object
+    String longestItemString = LongestStringItem(receiptItems);
 
-        for(int count = 0; count <=0; count ++)
-        {
+    //Width of receiptItems
+    int itemWidth = longestItemString.length();
+    int nameWidth = longestItemString.length();
 
-        f.format("%-" + W1 + ".15s %" + W2 + "d %" + W3 + ".2f\n", name, qty, price);
-        total += price * qty;
+
+            public void printTitle() {
+
+                f.format("%" + itemWidth + "s" + " %" + qty + "s" + " %"
+                        + priceWidth + "s" + "\n", "Description", "Quantity", "Price");
+                f.format("%" + itemWidth + "s" + " %" + qty + "s" + " %"
+                        + priceWidth + "s" + "\n", "--------------", "----------",
+                        "----------");
+            }
+
+            public void printItem() {
+
+                f.format("%" + -nameWidth + "s" + " %" + qty + "d" + " %"
+                        + receiptPriceWidth +  "s" + "\n", receiptItems[0], 567, 4576.36);
+                f.format("%" + -nameWidth + "s" + " %" + qty + "d" + " %"
+                        + receiptPriceWidth + "s" + "\n", receiptItems[1], 23, 565.43);
+                f.format("%" + -nameWidth + "s" + " %" + qty + "d" + " %"
+                        + receiptPriceWidth +"s" + "\n", receiptItems[2], 1, 145.80);
+
+            }
+
+            public static String LongestStringItem(String[] arrayOfItems) {
+                int maxLength = 0;
+                String longestString = null;
+                for (String s : arrayOfItems) {
+                    if (s.length() > maxLength) {
+                        maxLength = s.length();
+                        longestString = s;
+                    }
+                }
+                return longestString;
+            }
+
         }
-    }
-    public void printTotal() {
-        f.format(s3, "Tax", "", total * 0.06);
-        f.format(s1, "", "", "-----");
-        f.format(s3, "Total", "", total * 1.06);
-    }
-
-}
